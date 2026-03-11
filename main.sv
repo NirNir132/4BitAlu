@@ -47,4 +47,6 @@ mux multiplexer(
     .out(res)
 );
 
+assign overFlow = overFlowAdd || overFlowSub; //if one of them is going to be choosen and there is overflow- it would indiacte it.
+
 endmodule
