@@ -1,15 +1,18 @@
 #here I used Gemini, from my understanding it's just an 'bridge' file to help the compiler with Veriltor to understand the .sv code.
 MODULE = alu
+TB = testAlu
+SOURCES = main.sv aluTestBench.sv fullAdder.sv aluModes.sv Mux.sv
 
-all:
-	verilator --binary --timing -Wall --Wno-fatal main.sv aluTestBench.sv fullAdder.sv aluModes.sv Mux.sv
-	./obj_dir/Vtb_bcd_7seg
-    # שלב 2: קימפול התוצר לתוכנה אחת
-	make -C obj_dir -f V$(MODULE).mk V$(MODULE)
+all: run view
 
-run: all
-    # שלב 3: הרצה
-	./obj_dir/V$(MODULE)
+compile:
+	verilator --binary --timing --trace -Wall --Wno-fatal $(SOURCES) --top-module $(TB)
+
+run: compile
+	./obj_dir/V$(TB)
+
+view:
+	gtkwave waveform.vcd &
 
 clean:
-	rm -rf obj_dir
+	rm -rf obj_dir waveform.vcd
