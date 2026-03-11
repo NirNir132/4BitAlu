@@ -16,6 +16,7 @@ assign and2 = sub&{8{mode == 2'b01}};// 01 for subtracting 2 numbers
 assign and3 = bitOr&{8{mode == 2'b10}};//10 for bit-wize or
 assign and4 = bitXor&{8{mode == 2'b00}};//00 for bit-wize xor
 
+// 'tree' of OR gates to pass the choosen signal throghe the mux
 assign or1 = and1|and2;
 assign or2 = and3|and4;
 
